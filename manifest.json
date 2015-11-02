@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  "name": "Brand Colour Scraper",
+  "description": "Find website brand colours",
+  "version": "1.0",
+   "icons": {
+      "128": "icons/icon_128.png",
+      "16": "icons/icon_16.png",
+      "256": "icons/icon_256.png",
+      "48": "icons/icon_48.png"
+   },
+  "browser_action": {
+    "default_icon": "icons/icon.png",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [{
+    "matches": ["*://*/*"],
+    "js": ["content.js"]
+  }],
+  "permissions": [
+    "activeTab"
+  ]
+}
