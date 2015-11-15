@@ -4,8 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 }, false);
 
-function displayResults(colors) {
-    renderColors(JSON.parse(colors));
+function displayResults(response) {
+    var data = JSON.parse(response);
+    renderColors(data.colors.concat(data.grayScaleColors));
 }
 
 function renderColors(colors) {
@@ -38,13 +39,13 @@ function createColor(color) {
     return element;
 }
 
-function contrast(rgbObj) {
+function contrast(color) {
     var brightness;
-    brightness = (rgbObj.r * 299) + (rgbObj.g * 587) + (rgbObj.b * 114);
+    brightness = (color.r * 299) + (color.g * 587) + (color.b * 114);
     brightness = brightness / 255000;
     return (brightness >= 0.5) ?  "#000000" : "#ffffff";
 }
 
-function rgbToHex(rgbObj) {
-    return "#" + ((1 << 24) + (rgbObj.r << 16) + (rgbObj.g << 8) + rgbObj.b).toString(16).slice(1);
+function rgbToHex(color) {
+    return "#" + ((1 << 24) + (color.r << 16) + (color.g << 8) + color.b).toString(16).slice(1);
 }

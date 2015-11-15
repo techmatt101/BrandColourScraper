@@ -1,7 +1,7 @@
-function Color(rgbObj) {
-    this.r = rgbObj.r;
-    this.g = rgbObj.g;
-    this.b = rgbObj.b;
+function Color(r, g, b) {
+    this.r = r;
+    this.g = g;
+    this.b = b;
     this.hue = 0;
     this.sat = 0;
 
@@ -9,8 +9,8 @@ function Color(rgbObj) {
     var green = this.g / 255;
     var blue = this.b / 255;
 
-    var max = Math.max.apply(Math, [red, green, blue]);
-    var min = Math.min.apply(Math, [red, green, blue]);
+    var max = Math.max(red, green, blue);
+    var min = Math.min(red, green, blue);
 
     this.chr = max - min;
     this.val = max;
@@ -31,3 +31,12 @@ function Color(rgbObj) {
         }
     }
 }
+
+Color.prototype.toHex = function() {
+    return "#" + ((1 << 24) + (this.r << 16) + (this.g << 8) + this.b).toString(16).slice(1);
+};
+
+Color.FromString = function(str) {
+    var rgb = str.split("(")[1].split(")")[0].split(",");
+    return new Color(parseInt(rgb[0]), parseInt(rgb[1]), parseInt(rgb[2]));
+};
