@@ -25,7 +25,7 @@ function createColor(color) {
     element.style.color = contrast(color);
     element.textContent = hex;
 
-    element.addEventListener('click', function(event) {  
+    element.addEventListener('click', function() {
       try { 
         var range = document.createRange();  
         range.selectNode(element);  
