@@ -18,5 +18,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 sendResponse(response);
             });
             return true;
+
+        case 'logos':
+            chrome.tabs.sendMessage(request.tabId, { type: 'logos' }, function(response) {
+                sendResponse(response);
+            });
+            return true;
     }
 });

@@ -4,12 +4,20 @@ plugin.message('ready');
 
 plugin.on('pages', function(request, reply) {
     chrome.runtime.sendMessage({ type: 'tabs' }, function(tabs) {
-        reply(tabs);
+        reply({
+            tabs: tabs
+        });
     });
 });
 
 plugin.on('colors', function(request, reply) {
     chrome.runtime.sendMessage({ type: 'colors', tabId: request.tabId }, function(response) {
+        reply(response);
+    });
+});
+
+plugin.on('logos', function(request, reply) {
+    chrome.runtime.sendMessage({ type: 'logos', tabId: request.tabId }, function(response) {
         reply(response);
     });
 });
@@ -28,6 +36,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             sendResponse({
                 colors: colorCalc.getTopColors(),
                 grayScaleColors: colorCalc.getTopGrayScaleColors()
+            });
+            break;
+
+        case 'logos':
+            sendResponse({
+                logos: Images.getLogos().slice(0, 10)
             });
             break;
     }

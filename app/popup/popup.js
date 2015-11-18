@@ -1,10 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
     chrome.tabs.getSelected(null, function(tab) {
-      chrome.tabs.sendMessage(tab.id, { type: 'colors' }, displayResults);
+      chrome.tabs.sendMessage(tab.id, { type: 'colors' }, displayColors);
+      chrome.tabs.sendMessage(tab.id, { type: 'logos' }, displayImages);
     });
 }, false);
 
-function displayResults(response) {
+function displayImages(response) {
+    var docfrag = document.createDocumentFragment();
+    for (var i = 0; i < response.logos.length; i++) {
+        var img = new Image();
+        img.src = response.logos[i];
+        img.className = 'img';
+        docfrag.appendChild(img);
+    }
+    document.body.appendChild(docfrag);
+}
+
+function displayColors(response) {
     renderColors(response.colors.concat(response.grayScaleColors));
 }
 

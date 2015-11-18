@@ -7,7 +7,7 @@ Chrome Extension: Find website brand colours
 var tabs;
 
 window.addEventListener('brand-pages', function(response){
-    tabs = response.detail;
+    tabs = response.detail.tabs;
     console.log(tabs);
     var colorRequest = new CustomEvent('brand-request-colors', { detail: { tabId: tabs[0].id }});
     window.dispatchEvent(colorRequest);

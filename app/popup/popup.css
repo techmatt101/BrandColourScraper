@@ -4,3 +4,9 @@
 	text-transform: uppercase;
 	cursor: pointer;
 }
+
+.img {
+    padding: 10px;
+    width: 120px;
+    background: repeating-linear-gradient(45deg, #f8f8f8, #f8f8f8 5px, #ddd 5px, #ddd 10px);
+}
