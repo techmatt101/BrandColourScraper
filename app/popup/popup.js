@@ -17,7 +17,7 @@ function displayImages(response) {
 }
 
 function displayColors(response) {
-    renderColors(response.colors.concat(response.grayScaleColors));
+    renderColors(response.colorScores.concat(response.grayScaleColors));
 }
 
 function renderColors(colors) {

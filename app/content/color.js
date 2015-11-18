@@ -46,7 +46,11 @@ Color.prototype.set = function(r, g, b) {
     }
 };
 
-Color.FromString = function(str) {
+Color.isSimilar = function(color1, color2){
+    return Math.abs(color1.r - color2.r) + Math.abs(color1.g - color2.g) + Math.abs(color1.b - color2.b) < 50;
+};
+
+Color.fromString = function(str) {
     var rgb = str.split("(")[1].split(")")[0].split(",");
     return new Color(parseInt(rgb[0]), parseInt(rgb[1]), parseInt(rgb[2]));
 };

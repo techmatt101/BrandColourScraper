@@ -33,8 +33,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             }, ColorStylesBuilder.getUserAgentDefaultStyles());
 
             colorCalc.getColorsFromNode(document.body);
+            colorCalc.optimizeResults();
             sendResponse({
-                colors: colorCalc.getTopColors(),
+                colorScores: colorCalc.getTopColors(),
                 grayScaleColors: colorCalc.getTopGrayScaleColors()
             });
             break;

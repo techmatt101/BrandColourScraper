@@ -1,5 +1,5 @@
 function ColorStylesBuilder(weights, defaultElementStyles) {
-    this.colors = [];
+    this.colorScores = [];
     this.weights = weights;
     this.defaultElementStyles = defaultElementStyles;
 }
@@ -19,23 +19,43 @@ ColorStylesBuilder.prototype.getColorsFromNode = function(node) {
 };
 
 ColorStylesBuilder.prototype._scoreColor = function(colorValue, weight) {
-    var color = Color.FromString(colorValue);
-    var colorField = this.colors[color.hex];
+    var color = Color.fromString(colorValue);
+    var colorField = this.colorScores[color.hex];
     if (typeof colorField === 'undefined') {
-        colorField = { color: color, score: 0 };
-        this.colors[color.hex] = colorField;
-        this.colors.push(colorField);
+        if (typeof colorField === 'undefined') {
+            colorField = { color: color, score: 0 };
+            this.colorScores[color.hex] = colorField;
+            this.colorScores.push(colorField);
+        }
     }
     colorField.score += weight;
 };
 
+ColorStylesBuilder.prototype.optimizeResults = function() {
+    this.colorScores = this.colorScores.sort(function(a, b) {
+        return b.score - a.score;
+    });
+
+    var i = this.colorScores.length - 1;
+    while(i > 0) {
+        for (var j = 0; j < this.colorScores.length; j++) {
+            if(i === j) return;
+            if(Color.isSimilar(this.colorScores[i].color, this.colorScores[j].color)) {
+                console.log(7, i, this.colorScores[i].color);
+                this.colorScores[j].score += this.colorScores[i].score;
+                this.colorScores.splice(i, 1);
+                i--;
+                break;
+            }
+        }
+        i--;
+    }
+};
+
 ColorStylesBuilder.prototype.getTopColors = function() {
-    return this.colors
+    return this.colorScores
         .filter(function(x) {
             return x.color.sat > 0.1;
-        })
-        .sort(function(a, b) {
-            return b.score - a.score;
         })
         .splice(0, 10)
         .map(function(x) {
@@ -44,12 +64,9 @@ ColorStylesBuilder.prototype.getTopColors = function() {
 };
 
 ColorStylesBuilder.prototype.getTopGrayScaleColors = function() {
-    return this.colors
+    return this.colorScores
         .filter(function(x) {
             return x.color.sat <= 0.1;
-        })
-        .sort(function(a, b) {
-            return b.score - a.score;
         })
         .splice(0, 5)
         .sort(function(a, b) {
