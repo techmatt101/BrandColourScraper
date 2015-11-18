@@ -9,7 +9,6 @@ plugin.on('pages', function(request, reply) {
 });
 
 plugin.on('colors', function(request, reply) {
-    console.log(request);
     chrome.runtime.sendMessage({ type: 'colors', tabId: request.tabId }, function(response) {
         reply(response);
     });
