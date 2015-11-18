@@ -1,9 +1,23 @@
 function Color(r, g, b) {
+    this.r = 0;
+    this.g = 0;
+    this.b = 0;
+    this.hue = 0;
+    this.sat = 0;
+    this.hex = "#000000";
+    this.chr = 0;
+    this.val = 0;
+
+    if(arguments.length === 3) {
+        this.set(r, g, b);
+    }
+}
+
+Color.prototype.set = function(r, g, b) {
     this.r = r;
     this.g = g;
     this.b = b;
-    this.hue = 0;
-    this.sat = 0;
+    this.hex = "#" + ((1 << 24) + (this.r << 16) + (this.g << 8) + this.b).toString(16).slice(1);
 
     var red = this.r / 255;
     var green = this.g / 255;
@@ -30,10 +44,6 @@ function Color(r, g, b) {
             }
         }
     }
-}
-
-Color.prototype.toHex = function() {
-    return "#" + ((1 << 24) + (this.r << 16) + (this.g << 8) + this.b).toString(16).slice(1);
 };
 
 Color.FromString = function(str) {

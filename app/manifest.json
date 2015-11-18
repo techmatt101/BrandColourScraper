@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Brand Colour Scraper 1.1",
+  "name": "Brand Colour Scraper",
   "description": "Find website brand colours",
-  "version": "1.1",
+  "version": "1.2.0",
    "icons": {
       "128": "icons/icon_128.png",
       "16": "icons/icon_16.png",
@@ -17,7 +17,10 @@
     "matches": ["*://*/*"],
     "js": ["content.js"]
   }],
+  "background": {
+    "scripts": ["background.js"]
+  },
   "permissions": [
-    "activeTab"
+    "tabs"
   ]
 }

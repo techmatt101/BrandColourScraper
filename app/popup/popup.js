@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     chrome.tabs.getSelected(null, function(tab) {
-      chrome.tabs.sendMessage(tab.id, {text: 'report_back'}, displayResults);
+      chrome.tabs.sendMessage(tab.id, { type: 'colors' }, displayResults);
     });
 }, false);
 
 function displayResults(response) {
-    var data = JSON.parse(response);
-    renderColors(data.colors.concat(data.grayScaleColors));
+    renderColors(response.colors.concat(response.grayScaleColors));
 }
 
 function renderColors(colors) {
@@ -27,13 +26,13 @@ function createColor(color) {
     element.textContent = hex;
 
     element.addEventListener('click', function() {
-      try { 
-        var range = document.createRange();  
-        range.selectNode(element);  
-        window.getSelection().addRange(range);  
-        document.execCommand('copy');
-        window.getSelection().removeAllRanges();  
-      } catch(err) {}  
+        try {
+            var range = document.createRange();
+            range.selectNode(element);
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+        } catch(err) {}
     });
 
     return element;

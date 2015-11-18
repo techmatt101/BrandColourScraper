@@ -20,12 +20,10 @@ ColorStylesBuilder.prototype.getColorsFromNode = function(node) {
 
 ColorStylesBuilder.prototype._scoreColor = function(colorValue, weight) {
     var color = Color.FromString(colorValue);
-    var hexColor = color.toHex();
-
-    var colorField = this.colors[hexColor];
+    var colorField = this.colors[color.hex];
     if (typeof colorField === 'undefined') {
         colorField = { color: color, score: 0 };
-        this.colors[hexColor] = colorField;
+        this.colors[color.hex] = colorField;
         this.colors.push(colorField);
     }
     colorField.score += weight;
@@ -60,4 +58,11 @@ ColorStylesBuilder.prototype.getTopGrayScaleColors = function() {
         .map(function(x) {
             return x.color;
         });
+};
+
+ColorStylesBuilder.getUserAgentDefaultStyles = function() {
+    var tmp = document.createElement('default');
+    tmp.style.all = 'initial';
+    document.body.appendChild(tmp);
+    return getComputedStyle(tmp);
 };
