@@ -41,7 +41,6 @@ ColorStylesBuilder.prototype.optimizeResults = function() {
         for (var j = 0; j < this.colorScores.length; j++) {
             if(i === j) return;
             if(Color.isSimilar(this.colorScores[i].color, this.colorScores[j].color)) {
-                console.log(7, i, this.colorScores[i].color);
                 this.colorScores[j].score += this.colorScores[i].score;
                 this.colorScores.splice(i, 1);
                 i--;

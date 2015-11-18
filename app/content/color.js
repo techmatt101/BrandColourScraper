@@ -47,7 +47,7 @@ Color.prototype.set = function(r, g, b) {
 };
 
 Color.isSimilar = function(color1, color2){
-    return Math.abs(color1.r - color2.r) + Math.abs(color1.g - color2.g) + Math.abs(color1.b - color2.b) < 50;
+    return Math.abs(color1.r - color2.r) + Math.abs(color1.g - color2.g) + Math.abs(color1.b - color2.b) < 60;
 };
 
 Color.fromString = function(str) {
